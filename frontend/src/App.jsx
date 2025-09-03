@@ -1,56 +1,31 @@
-import { useEffect } from 'react';
-import { API } from './api/api';
-import { useState } from 'react';
-
-const CenterBlock = ({ children }) => {
-  return <div>{children}</div>;
-};
+import ActionButtons from './components/ActionButtons';
+import ConfigureAccount from './components/ConfigureAccount';
+import Container from './components/Container';
+import Navbar from './components/Navbar';
+import PaymentsReceived from './components/PaymentsReceived';
+import PayPalBenefits from './components/PayPalBenefits';
+import RecentActivities from './components/RecentActivities';
+import TransactionHistory from './components/TransactionHistory';
 
 export const App = () => {
-  const [transactionList, setTransactionsList] = useState([]);
-  const [nameTransaction, setNameTransaction] = useState('');
-
-  const fetchTransactions = async () => {
-    try {
-      const { data } = await API.get('/transactions');
-
-      setTransactionsList(data.data);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
-
-  const createTransaction = () => {};
-
   return (
-    <div className='w-full h-[100vh] flex justify-center items-center'>
-      <CenterBlock>
-        <div className='flex flex-col mb-5'>
-          <h2 className='mb-5 text-3xl text-center'>FORM!</h2>
-          <div className='flex flex-col gap-10'>
-            <input className='p-2 border rounded-2xl pl-5' type='text' placeholder='Type here the name of transaction' />
-            <input className='p-2 border rounded-2xl pl-5' type='text' placeholder='Type here the description of transaction' />
-            <input className='p-2 border rounded-2xl pl-5' type='text' placeholder='Type here the value of transaction' />
+    <div className='w-full min-h-screen bg-gray-100 font-sans'>
+      <Navbar />
+      <Container className='py-8'>
+        <div className='flex flex-col lg:flex-row lg:space-x-8'>
+          <div className='w-full lg:w-1/3 space-y-6 mb-8 lg:mb-0'>
+            <PayPalBenefits />
+            <ConfigureAccount />
+            <PaymentsReceived />
+            <RecentActivities />
+          </div>
+
+          <div className='w-full lg:w-2/3 space-y-6'>
+            <ActionButtons />
+            <TransactionHistory />
           </div>
         </div>
-
-        {transactionList.map((item, index) => {
-          return (
-            <div className='flex flex-col' key={index}>
-              <h1 className='text-red-400'>ID: {item.id}</h1>
-              <h1 className='text-purple-500'>NAME: {item.name}</h1>
-              <h1 className='text-gray-500'>VALUE: {item.value}</h1>
-              <h1 className='text-green-700'>DESCRIPTION: {item.description}</h1>
-              <h1>CREATED AT: {item.createdAt}</h1>
-            </div>
-          );
-        })}
-      </CenterBlock>
+      </Container>
     </div>
   );
 };
