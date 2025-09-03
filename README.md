@@ -2,7 +2,7 @@
 
 A full-stack application built with Vite frontend and Express backend.
 
-![Project Screenshot](project.png)
+![Project Screenshot](projectt.png)
 
 ## Installation
 
